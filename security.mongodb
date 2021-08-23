@@ -1,0 +1,17 @@
+use('shop')
+
+db.createUser({user: "Batuhan", pwd: "wert1234w1e2", roles: [{role: "userAdminAnyDatabase", db: "admin"}]})
+
+db.auth("Batuhan", "wert1234w1e2")
+
+show dbs
+
+db.createUser({user: "appdev", pwd: "appdev", roles: [{role: "readWrite", db: "shop"}]})
+
+db.auth("appdev", "appdev")
+
+db.products.insertOne({name: "Book"})
+
+db.logout()
+
+db.getUsers()

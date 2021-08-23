@@ -1,0 +1,8 @@
+use('performance')
+
+db.createCollection("capped", {capped: true, size: 1000, max: 3})
+
+db.capped.insertOne({name: "Batuhan Aydöner"})
+db.capped.insertOne({name: "Dev Mr. BA"})
+db.capped.insertOne({name: "Full Stack Web Developer"})
+db.capped.insertOne({name: "Software Engineer"})

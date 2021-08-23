@@ -1,0 +1,34 @@
+use('companyData')
+
+db.companies.insertOne({
+    name: "Fresh Apples Inc",
+    isStartup: true,
+    employees:33,
+    details: {ceo: "Mark Super"},
+    tags: [{title: "super"}, {title: "perfect"}],
+    foundingDate: new Date(),
+    insertedAt: new Timestamp()
+})
+
+db.companies.find().pretty()
+
+typeof db.companies.findOne({}).name
+
+db.persons.insertOne({name: "Batuhan Aydöner", age: 23, salary: 3500})
+
+db.cars.insertOne({model: 'BMW', price: 400000, owner: ObjectId("60f197455f0543f28ed16d48")})
+
+db.cars.aggregate([{/**
+ * from: The target collection.
+ * localField: The local join field.
+ * foreignField: The target join field.
+ * as: The name for the results.
+ * pipeline: The pipeline to run on the joined collection.
+ * let: Optional variables to use in the pipeline field stages.
+ */
+$lookup: {
+  from: 'persons',
+  localField: 'owner',
+  foreignField: '_id',
+  as: 'owner'
+}}])

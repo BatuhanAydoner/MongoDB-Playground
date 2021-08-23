@@ -1,0 +1,80 @@
+use('blogschema')
+
+db.users.insertMany([{name: "Batuhan Aydöner", age: 23, email: "batuhanaydonerg1998@gmail.com"}])
+
+db.posts.insertOne({title: "Power of MongoDB",
+ text: "MongoDB is one of the best databases. It is NoSQL database.",
+ tags: ["database", "new", "tech"],
+ creator: ObjectId("60f2873b9fdbecfd1b82f814"),
+ comments: [{text: "I liked this post", author: ObjectId("60f2873b9fdbecfd1b82f814")}]
+ })
+
+ db.posts.findOne()
+
+ db.posts.aggregate([{/**
+  * from: The target collection.
+  * localField: The local join field.
+  * foreignField: The target join field.
+  * as: The name for the results.
+  * pipeline: The pipeline to run on the joined collection.
+  * let: Optional variables to use in the pipeline field stages.
+  */
+ $lookup: {
+   from: 'users',
+   localField: 'creator',
+   foreignField: '_id',
+   as: 'user'
+ }}])
+
+db.createCollection("posts",
+{validator: {$jsonSchema: {bsonType: "object",
+required: ['title', 'text', 'creator', 'comments'],
+properties: {
+    title: {
+        bsonType: 'string',
+        description: "must be an title and is required"
+    },
+    text: {
+        bsonType: 'string',
+        description: "must be an text and is required"
+    },
+    creator: {
+        bsonType: 'objectId',
+        description: "must be an objectId and is required"
+    },
+    tags: {
+        bsonType: 'array',
+        items: {
+            bsonType: 'string'
+        }
+    },
+    comments: {
+        bsonType: 'array',
+        description: "must be an array and is required",
+        items: {
+            bsonType: 'object',
+            required: ["text", "author"],
+            properties: {
+                text: {
+                    bsonType: 'string',
+                    description: "must be a string and is required"
+                },
+                author: {
+                    bsonType: "objectId",
+                    description: "must be an objectId and is required"
+                }
+            }
+        }
+    }
+}}
+}})
+
+db.posts.aggregate([{
+    $lookup: {
+      from: 'users',
+      localField: 'creator',
+      foreignField: '_id',
+      as: 'author'
+    }
+}])
+

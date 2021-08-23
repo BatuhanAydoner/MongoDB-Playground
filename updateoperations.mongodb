@@ -1,0 +1,37 @@
+use('users')
+
+db.users.find()
+
+db.users.updateOne({name: "Manuel"}, {$inc: {age: 2}})
+db.users.updateOne({name: "Manuel"}, {$dec: {age: 2}})
+
+db.users.updateOne({name: "Chris"}, {$min: {age: 38}})
+db.users.updateOne({name: "Chris"}, {$max: {age: 38}})
+db.users.updateOne({name: "Chris"}, {$mul: {age: 1.1}})
+
+db.users.updateMany({}, {$unset: {phone: ""}})
+
+db.users.updateMany({}, {$rename: {phone_number: 'phone'}})
+
+db.users.updateOne({name: "Maria"}, {$set: {age: 30, hobbies: [{title: "Good food", frequency: 3}]}}, {upsert: true})
+
+db.users.find({"hobbies": {$elemMatch: {title: "Sports", frequency: {$gte: 3}}}})
+
+db.users.updateMany({hobbies: {$elemMatch: {title: "Sports", frequency: {$gte: 3}}}}, {$set: {"hobbies.$.highFrequency": true}})
+
+db.users.updateMany({hobbies: {$elemMatch: {frequency: {$gte: 2}}}}, {$set: {"hobbies.$[].goodFrequency": true}})
+
+db.users.updateMany({"hobbies.goodFrequency": {$exists: true}}, {$unset: {"hobbies.$[].goodFrequency": 1}})
+
+db.users.updateMany({"hobbies.frequency": {$gt: 2}}, {$set: {"hobbies.$[el].goodFrequency": true}}, {arrayFilters: [{"el.frequency": {$gt: 3}}]})
+
+db.users.updateMany({name: "Maria"}, {$push: {hobbies: {title: "Sports", frequency: 4}}})
+db.users.updateMany({name: "Maria"}, {$push: {hobbies: {$each: [{title: "Sports", frequency: 4}, {title: "Hiking", frequency: 2}], $sort: {frequency: -1}, $slice: 1}}})
+
+db.users.updateMany({name: "Maria"}, {$pull: {hobbies: {title: "Hiking"}}})
+db.users.updateMany({name: "Chris"}, {$pop: {hobbies: 1}})
+db.users.updateMany({name: "Chris"}, {$pop: {hobbies: -1}})
+
+db.users.updateMany({name: "Maria"}, {$addToSet: {hobbies: {title: "Hiking", frequency: 1}}})
+
+db.users.updateMany({"name": "Maria"}, {$pop: {hobbies: 1}})

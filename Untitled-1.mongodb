@@ -1,0 +1,136 @@
+// MongoDB Playground
+// To disable this template go to Settings | MongoDB | Use Default Template For Playground.
+// Make sure you are connected to enable completions and to be able to run a playground.
+// Use Ctrl+Space inside a snippet or a string literal to trigger completions.
+
+// Select the database to use.
+use('flights');
+
+// The drop() command destroys all data from a collection.
+// Make sure you run it against the correct database and collection.
+
+db.flights.insertOne({
+  name: "Batuhan Aydöner",
+  age: 22
+});
+
+db.flights.find().pretty();
+
+db.flights.deleteOne({_id: ObjectId("60b5c03de12c1c0a5cb0f307")});
+
+db.flights.deleteMany({name: "Batuhan Aydöner"});
+
+db.flights.updateOne({_id: ObjectId("60b5c03de12c1c0a5cb0f307")}, {$set: {department: "Software Engineering"}});
+
+db.flights.updateOne({_id: ObjectId("60b5c03de12c1c0a5cb0f307")}, {$set: {department: "Javascript World"}});
+
+db.flights.updateOne({_id: ObjectId("60b5c03de12c1c0a5cb0f307")}, {$set: {}});
+
+db.flights.find({name: "Batuhan Aydöner"});
+
+db.flights.find({age: {$gt: 21}});
+
+db.flights.replaceOne({name: "Dev Mr. BA"}, {
+  name: "Batuhan Aydöner",
+  age: 22
+});
+
+db.passengers.insertMany([
+  {
+    "name": "Max Schwarzmueller",
+    "age": 29
+  },
+  {
+    "name": "Manu Lorenz",
+    "age": 30
+  },
+  {
+    "name": "Chris Hayton",
+    "age": 35
+  },
+  {
+    "name": "Sandeep Kumar",
+    "age": 28
+  },
+  {
+    "name": "Maria Jones",
+    "age": 30
+  },
+  {
+    "name": "Alexandra Maier",
+    "age": 27
+  },
+  {
+    "name": "Dr. Phil Evans",
+    "age": 47
+  },
+  {
+    "name": "Sandra Brugge",
+    "age": 33
+  },
+  {
+    "name": "Elisabeth Mayr",
+    "age": 29
+  },
+  {
+    "name": "Frank Cube",
+    "age": 41
+  },
+  {
+    "name": "Karandeep Alun",
+    "age": 48
+  },
+  {
+    "name": "Michaela Drayer",
+    "age": 39
+  },
+  {
+    "name": "Bernd Hoftstadt",
+    "age": 22
+  },
+  {
+    "name": "Scott Tolib",
+    "age": 44
+  },
+  {
+    "name": "Freddy Melver",
+    "age": 41
+  },
+  {
+    "name": "Alexis Bohed",
+    "age": 35
+  },
+  {
+    "name": "Melanie Palace",
+    "age": 27
+  },
+  {
+    "name": "Armin Glutch",
+    "age": 35
+  },
+  {
+    "name": "Klaus Arber",
+    "age": 53
+  },
+  {
+    "name": "Albert Twostone",
+    "age": 68
+  },
+  {
+    "name": "Gordon Black",
+    "age": 38
+  }
+]
+);
+
+db.passengers.find({}, {name: 1, _id: 0});
+
+db.flights.updateOne({_id: ObjectId("60b5c03de12c1c0a5cb0f307")}, {$set:{hobbies: ["Reading", "Coding", "Sport", "Watching"]}});
+
+db.flights.findOne({name: "Batuhan Aydöner"}).hobbies;
+
+db.flights.find({hobbies: "Reading"});
+
+db.flights.updateOne({name: "Batuhan Aydöner"}, {$set: {skills: {javascript: "good", typescript: "good", nodejs: "good"}}});
+
+db.flights.find({"skills.javascript": "good"});

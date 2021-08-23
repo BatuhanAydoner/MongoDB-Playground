@@ -1,0 +1,11 @@
+use("contactData")
+
+db.hobbies.insertMany([{"_id": "sports", name: "Sports"}, {"_id": "cooking", name: "Cooking"}])
+
+db.hobbies.insertMany([{"_id": "sports", name: "Sports"},
+{"_id": "cooking", name: "Cooking"},
+{"_id": "medidation", name: "Medidation"}], {ordered: false})
+
+db.hobbies.find()
+
+db.hobbies.insertOne({"_id": "coding", name: "Coding"}, {writeConcern: {w: 1, j: true, wtimeout: 200}})

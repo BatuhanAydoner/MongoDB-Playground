@@ -1,0 +1,7 @@
+use('users')
+
+db.users.deleteOne({name: "Chris"})
+
+db.users.drop()
+
+db.dropDatabase()
