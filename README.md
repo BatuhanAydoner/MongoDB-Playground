@@ -1,3 +1,3 @@
 # MongoDB-Playground
 
-Mongodb studies.
+Mongodb studies. You can find jsons in the Jsons folder.
